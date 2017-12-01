@@ -118,6 +118,28 @@ namespace ThermoExcel
             return myExcelInt.retColArray(myOut);
         }
 
+        [ExcelFunction(Description = "Calculates chemical equilibrium for a given temperature and pressure, kmol/kg")]
+        public static object EquilibriumTPR_([ExcelArgument("temperature, C")]double t,
+                                           [ExcelArgument("pressure, bar gage")]double p,
+                                           [ExcelArgument("atoms H")]double aH,
+                                           [ExcelArgument("atoms C")]double aC,
+                                           [ExcelArgument("atoms N")]double aN,
+                                           [ExcelArgument("atoms O")]double aO,
+                                           [ExcelArgument("atoms Ar")]double aAr,
+                                           [ExcelArgument("atoms s")]double aS)
+        {
+            double[] myAtoms = new double[6];
+            myAtoms[0] = aH;
+            myAtoms[1] = aC;
+            myAtoms[2] = aN;
+            myAtoms[3] = aO;
+            myAtoms[4] = aAr;
+            myAtoms[5] = aS;
+            object[] myOut;
+            myOut = ML.CallHandler.EquilibriumTPR_(t, p, myAtoms);
+            return myExcelInt.retColArray(myOut);
+        }
+
         [ExcelFunction(Description = "Thermo data consistent with JANAF tables")]
         public static object[,] Thermo_JANAF([ExcelArgument("temperature, C")] double t, [ExcelArgument("specie name")] string spName )
         {
